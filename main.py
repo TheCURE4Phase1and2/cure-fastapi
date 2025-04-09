@@ -43,3 +43,23 @@ def submit_claim(claim: Claim):
     claim.status_reason = "Auto-approved for testing"
     db_claims[claim.claim_id] = claim
     return {"message": "Claim received", "status": claim.status, "reason": claim.status_reason}
+class ProviderProfile(BaseModel):
+    provider_id: str
+    legal_name: str
+    address: str
+    bank_name: str
+    routing_number: str
+    account_number: str
+    tax_id: str
+    npi_number: str
+    contact_email: str
+
+providers_db = {}
+
+@app.post("/providers/register")
+def register_provider(provider: ProviderProfile):
+    providers_db[provider.provider_id] = provider.dict()
+    return {
+        "message": "Provider registered successfully",
+        "provider_id": provider.provider_id
+    }
