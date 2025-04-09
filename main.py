@@ -1,10 +1,21 @@
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # You can also replace * with your Netlify domain for security
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
-app = FastAPI()
+
 
 # Simple in-memory claim store
 db_claims = {}
